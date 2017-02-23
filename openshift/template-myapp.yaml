@@ -13,7 +13,7 @@ objects:
     runPolicy: Serial
     source:
       git:
-        ref: master
+        ref: fabric8-jenkins
         uri: https://github.com/vpavlin/vertx-demo
       type: Git
     strategy:
