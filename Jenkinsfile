@@ -1,4 +1,4 @@
-node ('master') {
+node ('test') {
   stage 'build'
   openshiftBuild(buildConfig: 'myapp')
 
