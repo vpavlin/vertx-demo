@@ -68,33 +68,26 @@ mvn clean package
 mvn compile vertx:run
 ```
 
-# OpenShift Online
+# OpenShift 
 
-1. Go to [OpenShift Online](https://console.dev-preview-int.openshift.com/console/command-line) to get the token used by the oc client for authentication and project access.
-1. On the oc client, execute the following command to replace MYTOKEN with the one from the Web Console:
-    ```
-    oc login https://api.dev-preview-int.openshift.com --token=MYTOKEN
-    ```
-
-1. Use the Fabric8 Maven Plugin to launch the S2I process on the OpenShift Online machine and start the pod.
+    First import vert.x s2i template and wait for the s2i builder image to be built and pushed to registry.
 
     ```
-    mvn clean package fabric8:deploy -Popenshift -DskipTests
+    oc create -f https://raw.githubusercontent.com/vert-x3/vertx-openshift-s2i/master/vertx-s2i-all.json
+    oc logs bc/vertx-s2i -f
     ```
-1. Use the Host/Port address exposed by the route to access the REST endpoint
+
+    Once finished, proceed with following
 
     ```
-    oc get route/myapp
-    NAME         HOST/PORT                                                    PATH      SERVICE           TERMINATION   LABELS
-    myapp   <HOST_PORT_ADDRESS>             myapp:8080                 expose=true,group=org.jboss.obsidian.quickstart,project=myapp,provider=fabric8,version=1.0.0-SNAPSHOT
+    oc process -f openshift/template-myapp.yaml | oc apply -f -
+    oc start-build myapp-pipeline
     ```
-1. Call the endpoint using curl or httpie tool
+
+    You can watch the s2i build running
+
     ```
-    http http://<HOST_PORT_ADDRESS>/greeting
-    http http://<HOST_PORT_ADDRESS>/greeting name==Bruno
-    
-    or 
-    
-    curl http://<HOST_PORT_ADDRESS>/greeting
-    curl http://<HOST_PORT_ADDRESS>/greeting name==Bruno
+    oc logs bc/myapp -f
     ```
+
+    You can also see pipeline visualisation in OpenShift Console where you will also find links to Jenkins instance.
