@@ -70,24 +70,24 @@ mvn compile vertx:run
 
 # OpenShift 
 
-    First import vert.x s2i template and wait for the s2i builder image to be built and pushed to registry.
+First import vert.x s2i template and wait for the s2i builder image to be built and pushed to registry.
 
-    ```
-    oc create -f https://raw.githubusercontent.com/vert-x3/vertx-openshift-s2i/master/vertx-s2i-all.json
-    oc logs bc/vertx-s2i -f
-    ```
+```
+oc create -f https://raw.githubusercontent.com/vert-x3/vertx-openshift-s2i/master/vertx-s2i-all.json
+oc logs bc/vertx-s2i -f
+```
 
-    Once finished, proceed with following
+Once finished, proceed with following
 
-    ```
-    oc process -f openshift/template-myapp.yaml | oc apply -f -
-    oc start-build myapp-pipeline
-    ```
+```
+oc process -f openshift/template-myapp.yaml | oc apply -f -
+oc start-build myapp-pipeline
+```
 
-    You can watch the s2i build running
+You can watch the s2i build running
 
-    ```
-    oc logs bc/myapp -f
-    ```
+```
+oc logs bc/myapp -f
+```
 
-    You can also see pipeline visualisation in OpenShift Console where you will also find links to Jenkins instance.
+You can also see pipeline visualisation in OpenShift Console where you will also find links to Jenkins instance.
