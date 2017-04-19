@@ -29,7 +29,7 @@ public class Greeting {
     public Greeting(long id, String content) {
         this.id = id;
         this.content = content;
-        this.hostname = System.getenv().get("HOSTNAME")
+        this.hostname = System.getenv().get("HOSTNAME");
     }
 
     public long getId() {
