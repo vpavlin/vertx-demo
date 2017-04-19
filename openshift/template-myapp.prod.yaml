@@ -23,23 +23,15 @@ objects:
       resources: {}
     triggers:
       - type: ConfigChange
-      - type: ImageChange
-        imageChangeParams:
-          automatic: true
-          containerNames:
-            - myapp-prod
-          from:
-            kind: ImageStreamTag
-            name: 'myapp:prod'
     replicas: 1
     test: false
     selector:
-      deploymentconfig: myapp
+      deploymentconfig: myapp-prod
     template:
       metadata:
         creationTimestamp: null
         labels:
-          deploymentconfig: myapp
+          deploymentconfig: myapp-prod
       spec:
         containers:
           - name: myapp-prod
@@ -80,7 +72,7 @@ objects:
       protocol: TCP
       targetPort: 8080
     selector:
-      deploymentconfig: myapp
+      deploymentconfig: myapp-prod
     type: ClusterIP
 - apiVersion: v1
   kind: Route
