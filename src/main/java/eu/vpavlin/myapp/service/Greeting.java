@@ -25,6 +25,7 @@ public class Greeting {
     public Greeting() {
         this.id = 0;
         this.content = null;
+        this.hostname = null;
     }
 
     public Greeting(long id, String content) {
