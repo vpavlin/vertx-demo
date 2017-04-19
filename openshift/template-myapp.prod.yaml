@@ -1,0 +1,99 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: myapp
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    name: myapp-prod
+    labels:
+      app: vertx-helloworld-maven
+      application: vertx-helloworld-maven
+      createdBy: template-vertx-helloworld-maven
+  spec:
+    strategy:
+      type: Rolling
+      rollingParams:
+        updatePeriodSeconds: 1
+        intervalSeconds: 1
+        timeoutSeconds: 600
+        maxUnavailable: 25%
+        maxSurge: 25%
+      resources: {}
+    triggers:
+      - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - myapp-prod
+          from:
+            kind: ImageStreamTag
+            name: 'myapp:prod'
+    replicas: 1
+    test: false
+    selector:
+      deploymentconfig: myapp
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          deploymentconfig: myapp
+      spec:
+        containers:
+          - name: myapp-prod
+            image: 
+            ports:
+              - containerPort: 8080
+                protocol: TCP
+            resources: {}
+            livenessProbe:
+              tcpSocket:
+                port: 8080
+              initialDelaySeconds: 30
+              timeoutSeconds: 1
+              periodSeconds: 10
+              successThreshold: 1
+              failureThreshold: 3
+            terminationMessagePath: /dev/termination-log
+            imagePullPolicy: IfNotPresent
+            securityContext:
+              capabilities: {}
+              privileged: false
+        restartPolicy: Always
+        terminationGracePeriodSeconds: 30
+        dnsPolicy: ClusterFirst
+        securityContext: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: vertx-helloworld-maven
+      application: vertx-helloworld-maven
+      createdBy: template-vertx-helloworld-maven
+    name: myapp-prod
+  spec:
+    ports:
+    - name: myapp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: myapp
+    type: ClusterIP
+- apiVersion: v1
+  kind: Route
+  metadata:
+    labels:
+      app: vertx-helloworld-maven
+      application: vertx-helloworld-maven
+      createdBy: template-vertx-helloworld-maven
+    name: myapp-prod
+  spec:
+    to:
+      kind: Service
+      name: myapp-prod
+      weight: 100
+
+
