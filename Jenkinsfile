@@ -1,6 +1,6 @@
 node ('master') {
   stage 'build'
-  openshiftBuild(buildConfig: 'myapp')
+  openshiftBuild(buildConfig: 'myapp', showBuildLogs: "true")
 
   stage 'deploy'
   openshiftDeploy(deploymentConfig: 'myapp')
@@ -11,5 +11,4 @@ node ('master') {
 
   stage 'deploy-prod'
   openshiftTag(srcStream: 'myapp', srcTag: 'latest', destStream: 'myapp', destTag: 'prod')
-  openshiftDeploy(deploymentConfig: 'myapp-prod')
 }

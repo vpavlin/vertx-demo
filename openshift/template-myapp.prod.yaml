@@ -23,6 +23,14 @@ objects:
       resources: {}
     triggers:
       - type: ConfigChange
+      - type: ImageChange
+        imageChangeParams:
+          automatic: true
+          containerNames:
+            - myapp-prod
+          from:
+            kind: ImageStreamTag
+            name: 'myapp:prod'
     replicas: 1
     test: false
     selector:
@@ -49,7 +57,7 @@ objects:
               successThreshold: 1
               failureThreshold: 3
             terminationMessagePath: /dev/termination-log
-            imagePullPolicy: IfNotPresent
+            imagePullPolicy: Always
             securityContext:
               capabilities: {}
               privileged: false
