@@ -20,6 +20,7 @@ public class Greeting {
 
     private final long id;
     private final String content;
+    private final String hostname;
 
     public Greeting() {
         this.id = 0;
