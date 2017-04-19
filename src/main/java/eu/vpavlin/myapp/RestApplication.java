@@ -50,7 +50,7 @@ public class RestApplication extends AbstractVerticle {
   private void greeting(RoutingContext rc) {
     String name = rc.request().getParam("name");
     if (name == null) {
-      name = "World";
+      name = "DevConf PrgCont";
     }
     rc.response()
         .putHeader(CONTENT_TYPE, "application/json; charset=utf-8")
