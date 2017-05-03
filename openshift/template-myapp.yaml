@@ -3,6 +3,7 @@ kind: Template
 metadata:
   name: myapp
 objects:
+#Build Config (Jenkins)
 - apiVersion: v1
   kind: BuildConfig
   metadata:
@@ -27,6 +28,7 @@ objects:
     - generic:
         secret: secret101
       type: Generic
+#Build Config S2I
 - apiVersion: v1
   kind: BuildConfig
   metadata:
@@ -60,6 +62,7 @@ objects:
     - generic:
         secret: 7GGFe1BW
       type: Generic
+#Image Stream
 - apiVersion: v1
   kind: ImageStream
   metadata:
@@ -72,6 +75,7 @@ objects:
     tags:
     - importPolicy: {}
       name: latest
+#Deployment Config
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -134,6 +138,7 @@ objects:
         terminationGracePeriodSeconds: 30
         dnsPolicy: ClusterFirst
         securityContext: {}
+#Service
 - apiVersion: v1
   kind: Service
   metadata:
@@ -151,6 +156,7 @@ objects:
     selector:
       deploymentconfig: myapp
     type: ClusterIP
+#Route
 - apiVersion: v1
   kind: Route
   metadata:
