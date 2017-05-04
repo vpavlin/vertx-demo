@@ -81,6 +81,16 @@ Once finished, proceed with following
 
 ```
 oc process -f openshift/template-myapp.yaml | oc apply -f -
+```
+
+If you want to try approval step, you will need to apply one more template. This template contains another deployment
+config and updated pipeline build object which uses `Jenkinsfile.approve` pipeline definition
+
+```
+oc process -f openshift/template-myapp.prod.yaml | oc apply -f -
+```
+
+```
 oc start-build myapp-pipeline
 ```
 
