@@ -110,8 +110,8 @@ objects:
       type: Git
     strategy:
       jenkinsPipelineStrategy:
-        jenkinsfilePath: Jenkinsfile
-      type: JenkinsPipeline.approve
+        jenkinsfilePath: Jenkinsfile.approve
+      type: JenkinsPipeline
     triggers:
     - github:
         secret: secret101
