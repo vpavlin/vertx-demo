@@ -6,9 +6,13 @@ node ('master') {
   openshiftDeploy(deploymentConfig: 'myapp')
 
   stage("Test") {
+    sh "oc get route myapp -o jsonpath='{ .spec.host }' --loglevel=4 > routehost"
+    routeHost = readFile('routehost').trim()
+    print "Deployed http://${routeHost}"
     input message: "Approve?", id: "approval"
   }
 
   stage 'deploy-prod'
   openshiftTag(srcStream: 'myapp', srcTag: 'latest', destStream: 'myapp', destTag: 'prod')
+  openshiftVerifyDeployment(deploymentConfig: 'myapp-prod')
 }
