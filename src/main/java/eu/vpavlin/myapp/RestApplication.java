@@ -34,7 +34,7 @@ public class RestApplication extends AbstractVerticle {
     // Create a router object.
     Router router = Router.router(vertx);
 
-    router.get("/greeting").handler(this::greeting);
+    router.get("/").handler(this::greeting);
 
     // Create the HTTP server and pass the "accept" method to the request handler.
     vertx
